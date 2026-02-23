@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>thereafter - There Match</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="brand">
+          <img src="logo_white.png" alt="thereafter" class="brand-logo">
+        </div>
+      </div>
+      <h1 class="main-title">There Match</h1>
+      <div class="search-box">
+        <span class="search-icon">&#128270;</span>
+        <input type="text" id="search-input" placeholder="검색...">
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="controls">
+        <span class="result-count">검색 결과: <span id="result-count">0건</span></span>
+        <button class="reset-btn" id="reset-btn">전체 보기</button>
+      </div>
+      <div class="match-list" id="match-list"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>thereafter &copy; 2024</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

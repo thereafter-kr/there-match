@@ -1,0 +1,147 @@
+/* === thereafter — There Match === */
+:root {
+  --olive: #B5AD8E;
+  --pink: #E8C4B8;
+  --beige: #D5CAAB;
+  --orange: #E8A94D;
+  --dark: #1A1A1A;
+  --text: #333333;
+  --sub: #555555;
+  --muted: #888888;
+  --border: #E2DED8;
+  --w: 880px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+  background: #fff;
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================================================
+   HERO — olive
+   ================================================ */
+.hero {
+  background: var(--olive);
+  padding: 48px 24px 44px;
+}
+
+.hero-inner {
+  max-width: var(--w);
+  margin: 0 auto;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 2px;
+}
+
+.brand-logo {
+  height: 16px;
+  width: auto;
+  opacity: 0.6;
+}
+
+.main-title {
+  font-size: 32px;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 6px;
+  margin-top: 20px;
+  margin-bottom: 28px;
+}
+
+/* Search */
+.search-box { position: relative; }
+
+.search-box input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+.search-box input::placeholder { color: var(--muted); }
+
+.search-box .search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* ================================================
+   CONTENT
+   ================================================ */
+.content {
+  padding: 24px;
+}
+
+.content-inner {
+  max-width: var(--w);
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.result-count {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.result-count span {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.reset-btn {
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.reset-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+footer p {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
