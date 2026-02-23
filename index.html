@@ -14,28 +14,165 @@
         <div class="brand">
           <img src="logo_white.png" alt="thereafter" class="brand-logo">
         </div>
+        <div class="hero-right">
+          <button class="lock-btn" id="lock-btn">내부 모드</button>
+        </div>
       </div>
       <h1 class="main-title">There Match</h1>
-      <div class="search-box">
-        <span class="search-icon">&#128270;</span>
-        <input type="text" id="search-input" placeholder="검색...">
-      </div>
+      <p class="hero-desc">RFP 입력 → 모듈 조합 자동 추천</p>
     </div>
   </header>
 
   <main class="content">
     <div class="content-inner">
-      <div class="controls">
-        <span class="result-count">검색 결과: <span id="result-count">0건</span></span>
-        <button class="reset-btn" id="reset-btn">전체 보기</button>
+
+      <!-- INPUT SECTION -->
+      <div id="inputSection">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">1</div>
+            <div class="step-title">프로젝트 유형</div>
+            <div class="step-sub">단일 선택</div>
+          </div>
+          <div class="tags" id="projectType">
+            <div class="tag" data-val="신규 오픈">신규 오픈</div>
+            <div class="tag" data-val="리뉴얼">리뉴얼</div>
+            <div class="tag" data-val="팝업">팝업</div>
+            <div class="tag" data-val="이벤트">이벤트/캠페인</div>
+            <div class="tag" data-val="전시/체험관">전시/체험관</div>
+            <div class="tag" data-val="컨설팅">컨설팅/진단</div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">2</div>
+            <div class="step-title">업종</div>
+            <div class="step-sub">단일 선택</div>
+          </div>
+          <div class="tags" id="industry">
+            <div class="tag" data-val="가전/전자">가전/전자</div>
+            <div class="tag" data-val="패션/뷰티">패션/뷰티</div>
+            <div class="tag" data-val="F&B">F&B</div>
+            <div class="tag" data-val="자동차">자동차</div>
+            <div class="tag" data-val="유통/리테일">유통/리테일</div>
+            <div class="tag" data-val="IT/통신">IT/통신</div>
+            <div class="tag" data-val="라이프스타일">라이프스타일</div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">3</div>
+            <div class="step-title">핵심 타겟</div>
+            <div class="step-sub">단일 선택</div>
+          </div>
+          <div class="tags" id="target">
+            <div class="tag" data-val="MZ">MZ (20-35)</div>
+            <div class="tag" data-val="3040가족">3040 가족</div>
+            <div class="tag" data-val="5060시니어">5060 시니어</div>
+            <div class="tag" data-val="프리미엄">프리미엄/VIP</div>
+            <div class="tag" data-val="전연령">전연령</div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">4</div>
+            <div class="step-title">핵심 목적</div>
+            <div class="step-sub">복수 선택</div>
+          </div>
+          <div class="tags multi" id="objective">
+            <div class="tag" data-val="매출">매출 증대</div>
+            <div class="tag" data-val="인지도">브랜드 인지도</div>
+            <div class="tag" data-val="체류">고객 체류시간</div>
+            <div class="tag" data-val="유입">신규 고객 유입</div>
+            <div class="tag" data-val="재방문">재방문율</div>
+            <div class="tag" data-val="체험">제품 체험</div>
+            <div class="tag" data-val="바이럴">SNS 바이럴</div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">5</div>
+            <div class="step-title">예산 규모</div>
+            <div class="step-sub">단일 선택</div>
+          </div>
+          <div class="tags" id="budget">
+            <div class="tag" data-val="~5천만">~5천만</div>
+            <div class="tag" data-val="5천만~2억">5천만~2억</div>
+            <div class="tag" data-val="2억~5억">2억~5억</div>
+            <div class="tag" data-val="5억+">5억+</div>
+            <div class="tag" data-val="미정">미정</div>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step">
+          <div class="step-header">
+            <div class="step-num">6</div>
+            <div class="step-title">클라이언트 / 키워드</div>
+            <div class="step-sub">선택사항</div>
+          </div>
+          <input type="text" class="text-input" id="clientName" placeholder="클라이언트명 (비중복 추적용)">
+          <textarea class="text-input" id="keywords" placeholder="예: 구독 경험, 홈카페, 예약제, 프리미엄 체험존"></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" id="runBtn">조합 추천 실행</button>
+          <button class="btn btn-secondary" id="resetBtn">초기화</button>
+        </div>
       </div>
-      <div class="match-list" id="match-list"></div>
+
+      <!-- RESULTS SECTION -->
+      <div id="results">
+        <div class="divider"></div>
+        <div class="summary-bar" id="summaryBar"></div>
+        <div id="recipeMatch"></div>
+        <div class="result-section" id="resM5"></div>
+        <div class="result-section" id="resM1"></div>
+        <div class="result-section" id="resM2"></div>
+        <div class="result-section" id="resM3"></div>
+        <div class="result-section" id="resM4"></div>
+
+        <div class="result-section">
+          <div class="result-label">조합 요약 (복사용)</div>
+          <div class="copy-box" id="copyBox"></div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="copyBtn">클립보드 복사</button>
+            <button class="btn btn-secondary" id="downloadBtn">JSON 다운로드</button>
+          </div>
+        </div>
+
+        <!-- History (internal only) -->
+        <div class="result-section history-section" id="historySection">
+          <div class="result-label">PT 이력</div>
+          <div id="historyList"></div>
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="clearHistoryBtn">이력 초기화</button>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="backBtn">← 입력으로 돌아가기</button>
+        </div>
+      </div>
+
     </div>
   </main>
 
   <footer>
     <p>thereafter &copy; 2024</p>
   </footer>
+
+  <div class="toast" id="toast">복사 완료</div>
 
   <script src="app.js"></script>
 </body>
