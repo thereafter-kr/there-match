@@ -85,9 +85,21 @@ const INSIGHTS_DATA = {
   33: { name: '물인데, 맥주캔', keywords: '#리퀴드데스 #정체성디자인 #포장의힘', track: 'Track3' },
   34: { name: '선생님이 아니라, 초록 올빼미', keywords: '#두올링고 #응원의교육', track: 'Track2' },
   35: { name: '새로운 게 아니라, 이미 하던 거', keywords: '#관찰의힘 #크래프트하인즈 #소비자가만든다', track: 'Track3' },
-  48: { name: "Tea'stone — 문턱을 낮추자 MZ가 왔다", keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3' },
-  49: { name: 'Fisheye — 3㎡ 구멍가게의 시스템', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track1' },
-  50: { name: 'Moncler Genius — 이벤트를 시스템으로', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3' }
+  36: { name: '잠만 자도 사게 됩니다 (MUJI Hotel)', keywords: '#무지호텔 #체험형쇼룸 #살아보는경험', track: 'Track3' },
+  37: { name: '쓰레기가 20만원입니다 (FREITAG)', keywords: '#업사이클링 #유일무이 #프라이탁', track: 'Track1' },
+  38: { name: '사지 마세요, 가 가장 잘 팔렸습니다 (Patagonia)', keywords: '#역설의브랜딩 #진정성 #파타고니아', track: 'Track1' },
+  39: { name: '화면 밖으로 나왔습니다 (Netflix House)', keywords: '#넷플릭스하우스 #LBE #콘텐츠가공간이되는순간', track: 'Track3' },
+  40: { name: '빈 종이 한 장이 13조 원입니다 (Notion)', keywords: '#노션 #락인전략 #빈캔버스', track: 'Track3' },
+  41: { name: '10시간 29분 통화, 신발 한 켤레 (Zappos)', keywords: '#비효율의감동 #자포스 #매뉴얼없는콜센터', track: 'Track2' },
+  42: { name: '카페가 있는 옷가게가 아닙니다 (ARKET)', keywords: '#노르딕라이프스타일 #SPA의진화 #아르켓', track: 'Track3' },
+  43: { name: '비싼 가격이 콘텐츠입니다 (Erewhon)', keywords: '#가격이콘텐츠 #셀럽스무디 #에레원', track: 'Track3' },
+  44: { name: '좌석을 없앴더니 3만 개가 됐습니다 (Luckin Coffee)', keywords: '#경험을뺀전략 #루이싱커피 #앱퍼스트', track: 'Track3' },
+  45: { name: '백화점이 화성으로 갔습니다 (SKP-S)', keywords: '#세계관리테일 #젠틀몬스터 #비상업공간', track: 'Track3' },
+  46: { name: '뭐가 들었는지 모릅니다. 그래서 삽니다 (POP MART)', keywords: '#블라인드박스 #팝마트 #불확실성이상품', track: 'Track3' },
+  47: { name: '메뉴판이 없습니다 (% Arabica)', keywords: '#미니멀카페 #여백의디자인 #퍼센트아라비카', track: 'Track3' },
+  48: { name: '차 의식을 없앤 찻집 (Tea\'stone)', keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3' },
+  49: { name: 'IT 표준화로 3㎡에서도 품질 일관성 (Fisheye)', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track3' },
+  50: { name: '이벤트 시스템 (Moncler Genius)', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3' }
 };
 
 // ===== MATCHING RULES =====
