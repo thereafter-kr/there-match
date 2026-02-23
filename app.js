@@ -1,5 +1,33 @@
 // ===== There Match — app.js =====
 
+// ===== PASSWORD GATE =====
+(function() {
+  const GATE_PW = 'thereafter2026';
+  const gate = document.getElementById('gate');
+  const gateInput = document.getElementById('gate-input');
+  const gateBtn = document.getElementById('gate-btn');
+  const gateError = document.getElementById('gate-error');
+
+  document.body.classList.add('locked');
+
+  function tryUnlock() {
+    if (gateInput.value === GATE_PW) {
+      gate.classList.add('hidden');
+      document.body.classList.remove('locked');
+    } else {
+      gateError.textContent = '비밀번호가 올바르지 않습니다.';
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  }
+
+  gateBtn.addEventListener('click', tryUnlock);
+  gateInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') tryUnlock();
+  });
+  gateInput.focus();
+})();
+
 // ===== DATA =====
 
 const STORIES = [
