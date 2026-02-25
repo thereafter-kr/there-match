@@ -1,33 +1,544 @@
-// ===== There Match — app.js =====
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>There Match — 모듈 조합 추천</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf8;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --sub: #6b6b6b;
+  --accent: #2d2d2d;
+  --border: #e5e5e3;
+  --hover: #f5f5f3;
+  --tag-bg: #f0f0ee;
+  --tag-active: #2d2d2d;
+  --tag-active-text: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+  --green: #16a34a;
+  --green-light: #f0fdf4;
+  --amber: #d97706;
+  --amber-light: #fffbeb;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Noto Sans KR', sans-serif;
+}
 
-// ===== PASSWORD GATE =====
-(function() {
-  const GATE_PW = 'thereafter2026';
-  const gate = document.getElementById('gate');
-  const gateInput = document.getElementById('gate-input');
-  const gateBtn = document.getElementById('gate-btn');
-  const gateError = document.getElementById('gate-error');
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  document.body.classList.add('locked');
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
 
-  function tryUnlock() {
-    if (gateInput.value === GATE_PW) {
-      gate.classList.add('hidden');
-      document.body.classList.remove('locked');
-    } else {
-      gateError.textContent = '비밀번호가 올바르지 않습니다.';
-      gateInput.value = '';
-      gateInput.focus();
-    }
-  }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+}
 
-  gateBtn.addEventListener('click', tryUnlock);
-  gateInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') tryUnlock();
-  });
-  gateInput.focus();
-})();
+/* Header */
+.header { margin-bottom: 40px; }
 
+.header .brand {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-bottom: 6px;
+}
+
+.header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.header .desc {
+  font-size: 13px;
+  color: var(--sub);
+  font-weight: 300;
+}
+
+/* Steps */
+.step {
+  margin-bottom: 32px;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.step-sub {
+  font-size: 12px;
+  color: var(--sub);
+  margin-left: auto;
+  font-family: var(--mono);
+}
+
+/* Tags */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--card);
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.tag:hover { background: var(--hover); }
+.tag.active { background: var(--tag-active); color: var(--tag-active-text); border-color: var(--tag-active); }
+
+/* Text Input */
+.text-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  background: var(--card);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.text-input:focus { border-color: var(--accent); }
+textarea.text-input { resize: vertical; min-height: 64px; }
+
+/* Divider */
+.divider { height: 1px; background: var(--border); margin: 36px 0; }
+
+/* Button */
+.btn-row { display: flex; gap: 10px; margin-top: 24px; }
+
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { opacity: 0.85; }
+.btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--hover); }
+
+/* ===== RESULTS ===== */
+#results { display: none; }
+#results.show { display: block; }
+
+.result-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.result-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-bottom: 4px;
+}
+
+.result-module-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.result-module-desc {
+  font-size: 12px;
+  color: var(--sub);
+  font-weight: 300;
+}
+
+/* Module Card */
+.module-card {
+  border-left: 3px solid var(--border);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  background: var(--bg);
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.module-card:hover { border-left-color: var(--accent); }
+.module-card.selected { border-left-color: var(--accent); background: #f8f8f6; }
+
+.module-card .mc-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.module-card .mc-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 2px 0;
+}
+
+.module-card .mc-desc {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.module-card .mc-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: var(--mono);
+  margin-top: 4px;
+}
+
+.badge-primary { background: var(--blue-light); color: var(--blue); }
+.badge-secondary { background: var(--tag-bg); color: var(--sub); }
+.badge-match { background: var(--green-light); color: var(--green); }
+
+/* Insight Cards */
+.insight-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.insight-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+
+.insight-card:hover { border-color: var(--border); }
+
+.insight-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--sub);
+  min-width: 28px;
+  padding-top: 2px;
+}
+
+.insight-content { flex: 1; }
+
+.insight-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.insight-desc {
+  font-size: 11px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.insight-tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.insight-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 1px 6px;
+  background: var(--tag-bg);
+  border-radius: 3px;
+  color: var(--sub);
+}
+
+/* Summary Bar */
+.summary-bar {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.summary-bar .sb-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.summary-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.summary-flow .sf-module {
+  background: rgba(255,255,255,0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.summary-flow .sf-arrow {
+  opacity: 0.4;
+  font-size: 11px;
+}
+
+/* Recipe */
+.recipe-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: var(--mono);
+  background: var(--amber-light);
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+/* Copy section */
+.copy-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--sub);
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: var(--mono);
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">thereafter</div>
+    <h1>There Match</h1>
+    <div class="desc">RFP 입력 → 모듈 조합 자동 추천</div>
+  </div>
+
+  <!-- INPUT SECTION -->
+  <div id="inputSection">
+
+    <!-- Step 1: 프로젝트 유형 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">프로젝트 유형</div>
+        <div class="step-sub">단일 선택</div>
+      </div>
+      <div class="tags" id="projectType">
+        <div class="tag" data-val="경험공간">경험공간</div>
+        <div class="tag" data-val="판매공간">판매공간</div>
+        <div class="tag" data-val="비상설전시">비상설전시</div>
+        <div class="tag" data-val="이벤트">이벤트</div>
+        <div class="tag" data-val="팝업">팝업</div>
+        <div class="tag" data-val="컨설팅">컨설팅</div>
+      </div>
+    </div>
+
+    <!-- Step 2: 업종 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">업종</div>
+        <div class="step-sub">단일 선택</div>
+      </div>
+      <div class="tags" id="industry">
+        <div class="tag" data-val="가전/전자">가전/전자</div>
+        <div class="tag" data-val="패션/뷰티">패션/뷰티</div>
+        <div class="tag" data-val="F&B">F&B</div>
+        <div class="tag" data-val="자동차">자동차</div>
+        <div class="tag" data-val="유통/리테일">유통/리테일</div>
+        <div class="tag" data-val="IT/통신">IT/통신</div>
+        <div class="tag" data-val="라이프스타일">라이프스타일</div>
+      </div>
+    </div>
+
+    <!-- Step 3: 핵심 타겟 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">핵심 타겟</div>
+        <div class="step-sub">단일 선택</div>
+      </div>
+      <div class="tags" id="target">
+        <div class="tag" data-val="MZ">MZ (20-35)</div>
+        <div class="tag" data-val="3040가족">3040 가족</div>
+        <div class="tag" data-val="5060시니어">5060 시니어</div>
+        <div class="tag" data-val="프리미엄">프리미엄/VIP</div>
+        <div class="tag" data-val="전연령">전연령</div>
+      </div>
+    </div>
+
+    <!-- Step 4: 핵심 목적 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">핵심 목적</div>
+        <div class="step-sub">복수 선택</div>
+      </div>
+      <div class="tags multi" id="objective">
+        <div class="tag" data-val="매출">매출 증대</div>
+        <div class="tag" data-val="인지도">브랜드 인지도</div>
+        <div class="tag" data-val="체류">고객 체류시간</div>
+        <div class="tag" data-val="유입">신규 고객 유입</div>
+        <div class="tag" data-val="재방문">재방문율</div>
+        <div class="tag" data-val="체험">제품 체험</div>
+        <div class="tag" data-val="바이럴">SNS 바이럴</div>
+      </div>
+    </div>
+
+    <!-- Step 5: 예산 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">예산 규모</div>
+        <div class="step-sub">단일 선택</div>
+      </div>
+      <div class="tags" id="budget">
+        <div class="tag" data-val="~5천만">~5천만</div>
+        <div class="tag" data-val="5천만~2억">5천만~2억</div>
+        <div class="tag" data-val="2억~5억">2억~5억</div>
+        <div class="tag" data-val="5억+">5억+</div>
+        <div class="tag" data-val="미정">미정</div>
+      </div>
+    </div>
+
+    <!-- Step 6: 키워드 -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">키워드 / 맥락</div>
+        <div class="step-sub">선택사항</div>
+      </div>
+      <textarea class="text-input" id="keywords" placeholder="예: 구독 경험, 홈카페, 예약제, 프리미엄 체험존"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="runMatch()">조합 추천 실행</button>
+      <button class="btn btn-secondary" onclick="resetAll()">초기화</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div id="results">
+    <div class="divider"></div>
+
+    <!-- Summary -->
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <!-- Recipe match -->
+    <div id="recipeMatch"></div>
+
+    <!-- M5 Story -->
+    <div class="result-section" id="resM5"></div>
+
+    <!-- M1 Opening -->
+    <div class="result-section" id="resM1"></div>
+
+    <!-- M2 Perspective -->
+    <div class="result-section" id="resM2"></div>
+
+    <!-- M3 Insights -->
+    <div class="result-section" id="resM3"></div>
+
+    <!-- M4 Concept -->
+    <div class="result-section" id="resM4"></div>
+
+    <!-- Copy -->
+    <div class="result-section">
+      <div class="result-label">조합 요약 (복사용)</div>
+      <div class="copy-box" id="copyBox"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="copyResult()">클립보드 복사</button>
+        <button class="btn btn-secondary" onclick="downloadResult()">JSON 다운로드</button>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="backToInput()">← 입력으로 돌아가기</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">복사 완료</div>
+
+<script>
 // ===== DATA =====
 
 const STORIES = [
@@ -113,24 +624,12 @@ const INSIGHTS_DATA = {
   33: { name: '물인데, 맥주캔', keywords: '#리퀴드데스 #정체성디자인 #포장의힘', track: 'Track3' },
   34: { name: '선생님이 아니라, 초록 올빼미', keywords: '#두올링고 #응원의교육', track: 'Track2' },
   35: { name: '새로운 게 아니라, 이미 하던 거', keywords: '#관찰의힘 #크래프트하인즈 #소비자가만든다', track: 'Track3' },
-  36: { name: '잠만 자도 사게 됩니다 (MUJI Hotel)', keywords: '#무지호텔 #체험형쇼룸 #살아보는경험', track: 'Track3' },
-  37: { name: '쓰레기가 20만원입니다 (FREITAG)', keywords: '#업사이클링 #유일무이 #프라이탁', track: 'Track1' },
-  38: { name: '사지 마세요, 가 가장 잘 팔렸습니다 (Patagonia)', keywords: '#역설의브랜딩 #진정성 #파타고니아', track: 'Track1' },
-  39: { name: '화면 밖으로 나왔습니다 (Netflix House)', keywords: '#넷플릭스하우스 #LBE #콘텐츠가공간이되는순간', track: 'Track3' },
-  40: { name: '빈 종이 한 장이 13조 원입니다 (Notion)', keywords: '#노션 #락인전략 #빈캔버스', track: 'Track3' },
-  41: { name: '10시간 29분 통화, 신발 한 켤레 (Zappos)', keywords: '#비효율의감동 #자포스 #매뉴얼없는콜센터', track: 'Track2' },
-  42: { name: '카페가 있는 옷가게가 아닙니다 (ARKET)', keywords: '#노르딕라이프스타일 #SPA의진화 #아르켓', track: 'Track3' },
-  43: { name: '비싼 가격이 콘텐츠입니다 (Erewhon)', keywords: '#가격이콘텐츠 #셀럽스무디 #에레원', track: 'Track3' },
-  44: { name: '좌석을 없앴더니 3만 개가 됐습니다 (Luckin Coffee)', keywords: '#경험을뺀전략 #루이싱커피 #앱퍼스트', track: 'Track3' },
-  45: { name: '백화점이 화성으로 갔습니다 (SKP-S)', keywords: '#세계관리테일 #젠틀몬스터 #비상업공간', track: 'Track3' },
-  46: { name: '뭐가 들었는지 모릅니다. 그래서 삽니다 (POP MART)', keywords: '#블라인드박스 #팝마트 #불확실성이상품', track: 'Track3' },
-  47: { name: '메뉴판이 없습니다 (% Arabica)', keywords: '#미니멀카페 #여백의디자인 #퍼센트아라비카', track: 'Track3' },
-  48: { name: '차 의식을 없앤 찻집 (Tea\'stone)', keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3' },
-  49: { name: 'IT 표준화로 3㎡에서도 품질 일관성 (Fisheye)', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track3' },
-  50: { name: '이벤트 시스템 (Moncler Genius)', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3' }
+  48: { name: "Tea'stone — 문턱을 낮추자 MZ가 왔다", keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3' },
+  49: { name: 'Fisheye — 3㎡ 구멍가게의 시스템', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track1' },
+  50: { name: 'Moncler Genius — 이벤트를 시스템으로', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3' }
 };
 
-// ===== MATCHING RULES =====
+// ===== MATCHING LOGIC =====
 
 const STORY_RULES = {
   '경험공간':   { primary: 'S4', secondary: ['S3','S5'] },
@@ -160,9 +659,10 @@ const CONCEPT_RULES = {
 
 const BUDGET_CONCEPT_OVERRIDE = {
   '~5천만':     ['C10','C4'],
-  '5천만~2억':  ['C10','C4','C1']
+  '5천만~2억':  ['C10','C4','C1'],
 };
 
+// Industry → Law affinity
 const INDUSTRY_LAW = {
   '가전/전자':   ['L1','L3','L6'],
   '패션/뷰티':   ['L2','L4','L10'],
@@ -173,6 +673,7 @@ const INDUSTRY_LAW = {
   '라이프스타일':['L7','L2','L9']
 };
 
+// Target → Law boost
 const TARGET_LAW = {
   'MZ':         ['L2','L7','L9'],
   '3040가족':   ['L1','L3','L5'],
@@ -181,6 +682,7 @@ const TARGET_LAW = {
   '전연령':     ['L1','L2','L7']
 };
 
+// Objective → Law boost
 const OBJ_LAW = {
   '매출':   ['L1','L6'],
   '인지도': ['L2','L10'],
@@ -191,59 +693,22 @@ const OBJ_LAW = {
   '바이럴': ['L4','L2']
 };
 
+// ===== RECIPES =====
 const RECIPES = [
   { name: 'Recipe A: 위기감 + 전환', cond: (p,i,t,o) => p==='판매공간' && o.includes('매출'), m5:'S1',m1:'O8',m2:'L1',m4:'C4' },
   { name: 'Recipe B: 재정의 + 비전', cond: (p,i,t,o) => p==='경험공간' && o.includes('인지도'), m5:'S4',m1:'O5',m2:'L2',m4:'C3' },
   { name: 'Recipe C: 데이터 + 실행', cond: (p,i,t,o) => p==='컨설팅', m5:'S3',m1:'O3',m2:'L3',m4:'C9' },
   { name: 'Recipe D: 고객 공감 + 경험', cond: (p,i,t,o) => (p==='팝업'||p==='이벤트') && o.includes('체험'), m5:'S5',m1:'O2',m2:'L7',m4:'C5' },
-  { name: 'Recipe E: 희소성 + 프리미엄', cond: (p,i,t,o) => t==='프리미엄', m5:'S2',m1:'O6',m2:'L4',m4:'C6' }
+  { name: 'Recipe E: 희소성 + 프리미엄', cond: (p,i,t,o) => t==='프리미엄', m5:'S2',m1:'O6',m2:'L4',m4:'C6' },
 ];
-
-// ===== STATE =====
-let internalMode = false;
-
-// ===== DOM =====
-const lockBtn = document.getElementById('lock-btn');
-const runBtn = document.getElementById('runBtn');
-const resetBtn = document.getElementById('resetBtn');
-const backBtn = document.getElementById('backBtn');
-const copyBtn = document.getElementById('copyBtn');
-const downloadBtn = document.getElementById('downloadBtn');
-const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-
-// ===== PASSWORD =====
-lockBtn.addEventListener('click', () => {
-  if (internalMode) {
-    internalMode = false;
-    document.body.classList.remove('internal-mode');
-    lockBtn.classList.remove('active');
-    lockBtn.textContent = '내부 모드';
-    return;
-  }
-  const pw = prompt('내부 모드 비밀번호를 입력하세요.');
-  if (pw === null) return;
-  if (pw !== 'thereafter2026') {
-    alert('접근 권한이 없습니다.');
-    return;
-  }
-  internalMode = true;
-  document.body.classList.add('internal-mode');
-  lockBtn.classList.add('active');
-  lockBtn.textContent = '내부 모드 ON';
-});
 
 // ===== TAG LOGIC =====
 document.querySelectorAll('.tags').forEach(group => {
   const isMulti = group.classList.contains('multi');
   group.querySelectorAll('.tag').forEach(tag => {
     tag.addEventListener('click', () => {
-      if (tag.classList.contains('excluded')) return;
-      if (isMulti) {
-        tag.classList.toggle('active');
-      } else {
-        group.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-        tag.classList.toggle('active');
-      }
+      if (isMulti) { tag.classList.toggle('active'); }
+      else { group.querySelectorAll('.tag').forEach(t => t.classList.remove('active')); tag.classList.toggle('active'); }
     });
   });
 });
@@ -252,64 +717,8 @@ function getVal(id) {
   const t = document.querySelector(`#${id} .tag.active`);
   return t ? t.dataset.val : '';
 }
-
 function getVals(id) {
   return Array.from(document.querySelectorAll(`#${id} .tag.active`)).map(t => t.dataset.val);
-}
-
-// ===== HISTORY (localStorage) =====
-const HISTORY_KEY = 'thereMatchHistory';
-
-function getHistory() {
-  try {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
-  } catch { return []; }
-}
-
-function saveHistory(entry) {
-  const history = getHistory();
-  history.unshift(entry);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-}
-
-function clearHistory() {
-  localStorage.removeItem(HISTORY_KEY);
-  renderHistory();
-}
-
-function getExcludedModules(clientName) {
-  if (!clientName) return { m1: [], m3: [] };
-  const history = getHistory();
-  const clientHistory = history.filter(h => h.client === clientName);
-  const m1Set = new Set();
-  const m3Set = new Set();
-  clientHistory.forEach(h => {
-    if (h.m1) m1Set.add(h.m1);
-    if (h.m3) h.m3.forEach(n => m3Set.add(n));
-  });
-  return { m1: [...m1Set], m3: [...m3Set] };
-}
-
-function renderHistory() {
-  const list = document.getElementById('historyList');
-  const history = getHistory();
-  if (history.length === 0) {
-    list.innerHTML = '<div class="history-empty">PT 이력이 없습니다.</div>';
-    return;
-  }
-  list.innerHTML = history.map(h => `
-    <div class="history-item">
-      <div>
-        <span class="history-client">${h.client || '(미입력)'}</span>
-        <span class="history-date">${h.date}</span>
-        <div class="history-modules">
-          <span class="history-mod">M1:${h.m1 || '-'}</span>
-          <span class="history-mod">M3:${(h.m3 || []).map(n => '#'+n).join(',') || '-'}</span>
-          <span class="history-mod">M5:${h.m5 || '-'}</span>
-        </div>
-      </div>
-    </div>
-  `).join('');
 }
 
 // ===== MAIN MATCH =====
@@ -320,26 +729,22 @@ function runMatch() {
   const objectives = getVals('objective');
   const budget = getVal('budget');
   const keywords = document.getElementById('keywords').value;
-  const clientName = document.getElementById('clientName').value.trim();
 
   if (!pType) { alert('프로젝트 유형을 선택해주세요.'); return; }
 
-  // Non-repeat tracking
-  const excluded = getExcludedModules(clientName);
-
   // 1. M5 Story
   const storyRule = STORY_RULES[pType] || STORY_RULES['경험공간'];
+  // Boost: if objectives include 매출, prefer S1; if 인지도, prefer S4
   let m5id = storyRule.primary;
   if (objectives.includes('매출') && storyRule.secondary.includes('S1')) m5id = 'S1';
+
   const m5 = STORIES.find(s => s.id === m5id);
   const m5alts = storyRule.secondary.map(id => STORIES.find(s => s.id === id));
 
-  // 2. M1 Opening (exclude previously used for same client)
+  // 2. M1 Opening
   const openFit = STORY_OPENING_FIT[m5id] || STORY_OPENING_FIT['S1'];
-  let m1Candidates = openFit.best.filter(id => !excluded.m1.includes(id));
-  if (m1Candidates.length === 0) m1Candidates = openFit.best;
-  const m1 = OPENINGS.find(o => o.id === m1Candidates[0]);
-  const m1alts = m1Candidates.slice(1).map(id => OPENINGS.find(o => o.id === id));
+  const m1 = OPENINGS.find(o => o.id === openFit.best[0]);
+  const m1alts = openFit.best.slice(1).map(id => OPENINGS.find(o => o.id === id));
 
   // 3. M2 Law — score-based
   const lawScores = {};
@@ -361,24 +766,22 @@ function runMatch() {
   const m2 = LAWS.find(l => l.id === m2id);
   const m2alts = sortedLaws.slice(1,3).map(([id]) => LAWS.find(l => l.id === id));
 
-  // 4. M3 Insights — exclude previously used for same client
-  let primaryInsights = m2.insights.filter(n => !excluded.m3.includes(n)).slice(0, 3);
-  if (primaryInsights.length < 3) {
-    const extra = m2.insights.filter(n => !primaryInsights.includes(n)).slice(0, 3 - primaryInsights.length);
-    primaryInsights = [...primaryInsights, ...extra];
-  }
+  // 4. M3 Insights — from primary law + 1 from secondary
+  const primaryInsights = m2.insights.slice(0, 3);
   const secLaw = LAWS.find(l => l.id === sortedLaws[1][0]);
-  let secInsights = secLaw ? secLaw.insights.filter(n => !excluded.m3.includes(n) && !primaryInsights.includes(n)).slice(0, 1) : [];
-  if (secInsights.length === 0 && secLaw) secInsights = secLaw.insights.filter(n => !primaryInsights.includes(n)).slice(0, 1);
+  const secInsights = secLaw ? secLaw.insights.slice(0, 1) : [];
   const allInsightNums = [...primaryInsights, ...secInsights];
 
   // 5. M4 Concept
   const conceptRule = CONCEPT_RULES[pType] || CONCEPT_RULES['경험공간'];
   let m4id = conceptRule.primary;
+
+  // Budget override
   if (budget === '~5천만' || budget === '5천만~2억') {
     const overrides = BUDGET_CONCEPT_OVERRIDE[budget];
     if (overrides && overrides.length) m4id = overrides[0];
   }
+
   const m4 = CONCEPTS.find(c => c.id === m4id);
   const m4alts = conceptRule.secondary.map(id => CONCEPTS.find(c => c.id === id));
 
@@ -388,25 +791,14 @@ function runMatch() {
     if (r.cond(pType, industry, target, objectives)) { matchedRecipe = r; break; }
   }
 
-  // Save to history
-  saveHistory({
-    client: clientName,
-    date: new Date().toISOString().split('T')[0],
-    rfp: { type: pType, industry, target, objectives, budget },
-    m1: m1.id,
-    m3: allInsightNums,
-    m5: m5.id
-  });
-
-  // Render
-  renderResults({ pType, industry, target, objectives, budget, keywords, clientName, m5, m5alts, m1, m1alts, m2, m2alts, m4, m4alts, allInsightNums, matchedRecipe, excluded });
+  // ===== RENDER =====
+  renderResults({ pType, industry, target, objectives, budget, keywords, m5, m5alts, m1, m1alts, m2, m2alts, m4, m4alts, allInsightNums, matchedRecipe, secLaw });
 }
 
-// ===== RENDER =====
 function renderResults(d) {
   // Summary bar
   document.getElementById('summaryBar').innerHTML = `
-    <div class="sb-title">추천 조합${d.clientName ? ' — ' + d.clientName : ''}</div>
+    <div class="sb-title">추천 조합</div>
     <div class="summary-flow">
       <span class="sf-module">${d.m1.name.split('.')[1] || d.m1.name}</span>
       <span class="sf-arrow">→</span>
@@ -420,7 +812,11 @@ function renderResults(d) {
 
   // Recipe
   const recipeEl = document.getElementById('recipeMatch');
-  recipeEl.innerHTML = d.matchedRecipe ? `<div class="recipe-tag">${d.matchedRecipe.name} 패턴 매칭</div>` : '';
+  if (d.matchedRecipe) {
+    recipeEl.innerHTML = `<div class="recipe-tag">🎯 ${d.matchedRecipe.name} 패턴 매칭</div>`;
+  } else {
+    recipeEl.innerHTML = '';
+  }
 
   // M5
   document.getElementById('resM5').innerHTML = `
@@ -430,10 +826,8 @@ function renderResults(d) {
   `;
 
   // M1
-  const m1ExcludeNote = d.excluded.m1.length > 0 ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">(${d.clientName} 이전 사용 제외: ${d.excluded.m1.join(', ')})</div>` : '';
   document.getElementById('resM1').innerHTML = `
     <div class="result-label">M1 — 오프닝 패턴 (01~03P)</div>
-    ${m1ExcludeNote}
     ${renderModuleCard(d.m1, '추천', 'badge-primary')}
     ${d.m1alts.map(a => renderModuleCard(a, '대안', 'badge-secondary')).join('')}
   `;
@@ -446,7 +840,6 @@ function renderResults(d) {
   `;
 
   // M3
-  const m3ExcludeNote = d.excluded.m3.length > 0 ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">(${d.clientName} 이전 사용 제외: #${d.excluded.m3.join(', #')})</div>` : '';
   const insightCards = d.allInsightNums.map((num, i) => {
     const ins = INSIGHTS_DATA[num];
     if (!ins) return '';
@@ -468,7 +861,6 @@ function renderResults(d) {
 
   document.getElementById('resM3').innerHTML = `
     <div class="result-label">M3 — 추천 인사이트 (09~15P)</div>
-    ${m3ExcludeNote}
     <div class="insight-grid">${insightCards}</div>
   `;
 
@@ -481,11 +873,10 @@ function renderResults(d) {
 
   // Copy box
   const copyText = [
-    '[There Match 추천 결과]',
-    `클라이언트: ${d.clientName || '-'}`,
+    `[There Match 추천 결과]`,
     `RFP: ${d.pType} / ${d.industry} / ${d.target} / ${d.objectives.join(',')} / ${d.budget}`,
     `키워드: ${d.keywords || '-'}`,
-    '',
+    ``,
     `M5 스토리: ${d.m5.name}`,
     `M1 오프닝: ${d.m1.name}`,
     `M2 관점: ${d.m2.name} (보조: ${d.m2alts.map(a=>a.name).join(', ')})`,
@@ -495,13 +886,8 @@ function renderResults(d) {
   ].join('\n');
 
   document.getElementById('copyBox').textContent = copyText;
-  window._matchResult = {
-    client: d.clientName,
-    rfp: { type: d.pType, industry: d.industry, target: d.target, objectives: d.objectives, budget: d.budget, keywords: d.keywords },
-    recommendation: { m5: d.m5.name, m1: d.m1.name, m2: d.m2.name, m3: d.allInsightNums, m4: d.m4.name, recipe: d.matchedRecipe ? d.matchedRecipe.name : null }
-  };
+  window._matchResult = { rfp: { type: d.pType, industry: d.industry, target: d.target, objectives: d.objectives, budget: d.budget, keywords: d.keywords }, recommendation: { m5: d.m5.name, m1: d.m1.name, m2: d.m2.name, m3: d.allInsightNums, m4: d.m4.name, recipe: d.matchedRecipe ? d.matchedRecipe.name : null } };
 
-  renderHistory();
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 }
@@ -517,31 +903,16 @@ function renderModuleCard(mod, badge, badgeClass) {
   `;
 }
 
-// ===== ACTIONS =====
-runBtn.addEventListener('click', runMatch);
-
-resetBtn.addEventListener('click', () => {
-  document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-  document.getElementById('keywords').value = '';
-  document.getElementById('clientName').value = '';
-  document.getElementById('results').classList.remove('show');
-});
-
-backBtn.addEventListener('click', () => {
-  document.getElementById('results').classList.remove('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-copyBtn.addEventListener('click', () => {
+function copyResult() {
   const text = document.getElementById('copyBox').textContent;
   navigator.clipboard.writeText(text).then(() => {
     const t = document.getElementById('toast');
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2000);
   });
-});
+}
 
-downloadBtn.addEventListener('click', () => {
+function downloadResult() {
   if (!window._matchResult) return;
   const json = JSON.stringify(window._matchResult, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
@@ -551,13 +922,19 @@ downloadBtn.addEventListener('click', () => {
   a.download = `there-match_${new Date().toISOString().split('T')[0]}.json`;
   a.click();
   URL.revokeObjectURL(url);
-});
+}
 
-clearHistoryBtn.addEventListener('click', () => {
-  if (confirm('PT 이력을 모두 삭제하시겠습니까?')) {
-    clearHistory();
-  }
-});
+function backToInput() {
+  document.getElementById('results').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-// ===== INIT =====
-renderHistory();
+function resetAll() {
+  document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+  document.getElementById('keywords').value = '';
+  document.getElementById('results').classList.remove('show');
+}
+</script>
+
+</body>
+</html>
