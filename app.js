@@ -78,56 +78,56 @@ const CONCEPTS = [
 ];
 
 const INSIGHTS_DATA = {
-  1: { name: '지울 수 없는 진심 (안성기의 손편지)', keywords: '#손편지 #진심', track: 'Track1' },
-  2: { name: '셀프 환대 (최화정)', keywords: '#리추얼 #셀프환대', track: 'Track2' },
-  3: { name: '로컬의 중력', keywords: '#결핍의미학 #목적지브랜드 #성심당', track: 'Track1' },
-  4: { name: '지금 아니면 없다', keywords: '#긴박한경험 #시간제한 #자라', track: 'Track3' },
-  5: { name: "먹는 곳이 아니라 '있는' 곳", keywords: '#체류형공간 #런던베이글뮤지엄', track: 'Track3' },
-  6: { name: "평범한 것을 '뮤지엄'이라 부르는 순간", keywords: '#네이밍의힘 #경험격상', track: 'Track3' },
-  7: { name: "매장이 아니라 '사건'", keywords: '#드롭컬처 #오픈런 #ZARA', track: 'Track3' },
-  8: { name: '완벽한 기본', keywords: '#본질의완성 #유니클로 #장인정신', track: 'Track1' },
-  9: { name: "옷장이 아니라 '유니폼'", keywords: '#보편성 #선택단순화 #유니클로', track: 'Track2' },
-  10: { name: '보이지 않는 기술', keywords: '#숨겨진혁신 #유니클로', track: 'Track1' },
-  11: { name: '계절을 파는 가게', keywords: '#기능이스타일 #에어리즘 #히트텍', track: 'Track1' },
-  12: { name: '빠지는 것의 미학', keywords: '#극단적단순 #노로고 #미니멀', track: 'Track1' },
-  13: { name: '못생긴 밑창의 역습', keywords: '#기능주의 #엔지니어링 #온', track: 'Track1' },
-  14: { name: '주인공을 죽여도 세계는 산다', keywords: '#세계관 #유니버스 #주토피아', track: 'Track1' },
-  15: { name: '선택지가 3개밖에 없는 마트', keywords: '#결정피로 #코스트코 #큐레이션', track: 'Track2' },
-  16: { name: '메뉴가 3개밖에 없는 버거집', keywords: '#단순함 #인앤아웃 #집중', track: 'Track1' },
-  17: { name: '안 하는 버거집', keywords: '#거부 #원칙 #인앤아웃', track: 'Track2' },
-  18: { name: '시크릿 메뉴가 더 유명한 가게', keywords: '#숨김 #시크릿메뉴 #인앤아웃', track: 'Track2' },
-  19: { name: '컨시어지가 있는 서점', keywords: '#맞춤서비스 #츠타야 #큐레이션', track: 'Track2' },
-  20: { name: '50대만 오는 서점', keywords: '#선택과집중 #시니어 #츠타야', track: 'Track2' },
-  21: { name: '3개의 법칙', keywords: '#결정피로 #선택축소 #심리학', track: 'Track1' },
-  22: { name: '신발이 아니라 선수를 팝니다', keywords: '#꿈 #나이키 #스토리', track: 'Track2' },
-  23: { name: '집도 아니고 회사도 아닌 곳', keywords: '#스타벅스 #제3의공간 #카테고리창조', track: 'Track1' },
-  24: { name: '주방이 카운터 앞에 있습니다', keywords: '#오픈키친 #치폴레 #투명성', track: 'Track1' },
-  25: { name: '종이봉투에 철학을 쓰는 식당', keywords: '#문화 #치폴레 #콘텐츠', track: 'Track2' },
-  26: { name: '집주인이 고객보다 중요한 회사', keywords: '#공급중심 #에어비앤비 #역발상', track: 'Track2' },
-  27: { name: '호텔이 아니라 경험을 팝니다', keywords: '#경험판매 #에어비앤비 #로컬', track: 'Track1' },
-  28: { name: '영상 속 남자가 튀어나왔습니다', keywords: '#디지털소환 #온오프통합', track: 'Track3' },
-  29: { name: '상 못 받았는데 가장 화제', keywords: '#기억승리 #화제성', track: 'Track2' },
-  30: { name: '숫자가 아니라, 구름', keywords: '#감각의언어 #스펙을느낌으로 #온', track: 'Track3' },
-  31: { name: '완벽하게 통역되자, 아무것도 통하지 않았습니다', keywords: '#AI통역 #기술의역설', track: 'Track3' },
-  32: { name: '"나도 저래" - 네 글자로 끝나는 공감', keywords: '#나도저래 #평범의보편 #러브미', track: 'Track2' },
-  33: { name: '물인데, 맥주캔', keywords: '#리퀴드데스 #정체성디자인 #포장의힘', track: 'Track3' },
-  34: { name: '선생님이 아니라, 초록 올빼미', keywords: '#두올링고 #응원의교육', track: 'Track2' },
-  35: { name: '새로운 게 아니라, 이미 하던 거', keywords: '#관찰의힘 #크래프트하인즈 #소비자가만든다', track: 'Track3' },
-  36: { name: '잠만 자도 사게 됩니다 (MUJI Hotel)', keywords: '#무지호텔 #체험형쇼룸 #살아보는경험', track: 'Track3' },
-  37: { name: '쓰레기가 20만원입니다 (FREITAG)', keywords: '#업사이클링 #유일무이 #프라이탁', track: 'Track1' },
-  38: { name: '사지 마세요, 가 가장 잘 팔렸습니다 (Patagonia)', keywords: '#역설의브랜딩 #진정성 #파타고니아', track: 'Track1' },
-  39: { name: '화면 밖으로 나왔습니다 (Netflix House)', keywords: '#넷플릭스하우스 #LBE #콘텐츠가공간이되는순간', track: 'Track3' },
-  40: { name: '빈 종이 한 장이 13조 원입니다 (Notion)', keywords: '#노션 #락인전략 #빈캔버스', track: 'Track3' },
-  41: { name: '10시간 29분 통화, 신발 한 켤레 (Zappos)', keywords: '#비효율의감동 #자포스 #매뉴얼없는콜센터', track: 'Track2' },
-  42: { name: '카페가 있는 옷가게가 아닙니다 (ARKET)', keywords: '#노르딕라이프스타일 #SPA의진화 #아르켓', track: 'Track3' },
-  43: { name: '비싼 가격이 콘텐츠입니다 (Erewhon)', keywords: '#가격이콘텐츠 #셀럽스무디 #에레원', track: 'Track3' },
-  44: { name: '좌석을 없앴더니 3만 개가 됐습니다 (Luckin Coffee)', keywords: '#경험을뺀전략 #루이싱커피 #앱퍼스트', track: 'Track3' },
-  45: { name: '백화점이 화성으로 갔습니다 (SKP-S)', keywords: '#세계관리테일 #젠틀몬스터 #비상업공간', track: 'Track3' },
-  46: { name: '뭐가 들었는지 모릅니다. 그래서 삽니다 (POP MART)', keywords: '#블라인드박스 #팝마트 #불확실성이상품', track: 'Track3' },
-  47: { name: '메뉴판이 없습니다 (% Arabica)', keywords: '#미니멀카페 #여백의디자인 #퍼센트아라비카', track: 'Track3' },
-  48: { name: '차 의식을 없앤 찻집 (Tea\'stone)', keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3' },
-  49: { name: 'IT 표준화로 3㎡에서도 품질 일관성 (Fisheye)', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track3' },
-  50: { name: '이벤트 시스템 (Moncler Genius)', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3' }
+  1: { name: '지울 수 없는 진심 (안성기의 손편지)', keywords: '#손편지 #진심', track: 'Track1', btlType: ['경험공간'] },
+  2: { name: '셀프 환대 (최화정)', keywords: '#리추얼 #셀프환대', track: 'Track2', btlType: ['경험공간','판매공간'] },
+  3: { name: '로컬의 중력', keywords: '#결핍의미학 #목적지브랜드 #성심당', track: 'Track1', btlType: ['경험공간','판매공간'] },
+  4: { name: '지금 아니면 없다', keywords: '#긴박한경험 #시간제한 #자라', track: 'Track3', btlType: ['판매공간','팝업'] },
+  5: { name: "먹는 곳이 아니라 '있는' 곳", keywords: '#체류형공간 #런던베이글뮤지엄', track: 'Track3', btlType: ['경험공간'] },
+  6: { name: "평범한 것을 '뮤지엄'이라 부르는 순간", keywords: '#네이밍의힘 #경험격상', track: 'Track3', btlType: ['경험공간','비상설전시'] },
+  7: { name: "매장이 아니라 '사건'", keywords: '#드롭컬처 #오픈런 #ZARA', track: 'Track3', btlType: ['판매공간','이벤트'] },
+  8: { name: '완벽한 기본', keywords: '#본질의완성 #유니클로 #장인정신', track: 'Track1', btlType: ['판매공간'] },
+  9: { name: "옷장이 아니라 '유니폼'", keywords: '#보편성 #선택단순화 #유니클로', track: 'Track2', btlType: ['경험공간','판매공간'] },
+  10: { name: '보이지 않는 기술', keywords: '#숨겨진혁신 #유니클로', track: 'Track1', btlType: ['판매공간'] },
+  11: { name: '계절을 파는 가게', keywords: '#기능이스타일 #에어리즘 #히트텍', track: 'Track1', btlType: ['판매공간'] },
+  12: { name: '빠지는 것의 미학', keywords: '#극단적단순 #노로고 #미니멀', track: 'Track1', btlType: ['판매공간'] },
+  13: { name: '못생긴 밑창의 역습', keywords: '#기능주의 #엔지니어링 #온', track: 'Track1', btlType: ['판매공간','경험공간'] },
+  14: { name: '주인공을 죽여도 세계는 산다', keywords: '#세계관 #유니버스 #주토피아', track: 'Track1', btlType: ['비상설전시','경험공간'] },
+  15: { name: '선택지가 3개밖에 없는 마트', keywords: '#결정피로 #코스트코 #큐레이션', track: 'Track2', btlType: ['판매공간'] },
+  16: { name: '메뉴가 3개밖에 없는 버거집', keywords: '#단순함 #인앤아웃 #집중', track: 'Track1', btlType: ['판매공간'] },
+  17: { name: '안 하는 버거집', keywords: '#거부 #원칙 #인앤아웃', track: 'Track2', btlType: ['판매공간'] },
+  18: { name: '시크릿 메뉴가 더 유명한 가게', keywords: '#숨김 #시크릿메뉴 #인앤아웃', track: 'Track2', btlType: ['판매공간'] },
+  19: { name: '컨시어지가 있는 서점', keywords: '#맞춤서비스 #츠타야 #큐레이션', track: 'Track2', btlType: ['경험공간','판매공간'] },
+  20: { name: '50대만 오는 서점', keywords: '#선택과집중 #시니어 #츠타야', track: 'Track2', btlType: ['경험공간','컨설팅'] },
+  21: { name: '3개의 법칙', keywords: '#결정피로 #선택축소 #심리학', track: 'Track1', btlType: ['판매공간','컨설팅'] },
+  22: { name: '신발이 아니라 선수를 팝니다', keywords: '#꿈 #나이키 #스토리', track: 'Track2', btlType: ['이벤트','경험공간'] },
+  23: { name: '집도 아니고 회사도 아닌 곳', keywords: '#스타벅스 #제3의공간 #카테고리창조', track: 'Track1', btlType: ['경험공간'] },
+  24: { name: '주방이 카운터 앞에 있습니다', keywords: '#오픈키친 #치폴레 #투명성', track: 'Track1', btlType: ['판매공간','경험공간'] },
+  25: { name: '종이봉투에 철학을 쓰는 식당', keywords: '#문화 #치폴레 #콘텐츠', track: 'Track2', btlType: ['판매공간'] },
+  26: { name: '집주인이 고객보다 중요한 회사', keywords: '#공급중심 #에어비앤비 #역발상', track: 'Track2', btlType: ['컨설팅'] },
+  27: { name: '호텔이 아니라 경험을 팝니다', keywords: '#경험판매 #에어비앤비 #로컬', track: 'Track1', btlType: ['경험공간'] },
+  28: { name: '영상 속 남자가 튀어나왔습니다', keywords: '#디지털소환 #온오프통합', track: 'Track3', btlType: ['이벤트'] },
+  29: { name: '상 못 받았는데 가장 화제', keywords: '#기억승리 #화제성', track: 'Track2', btlType: ['이벤트'] },
+  30: { name: '숫자가 아니라, 구름', keywords: '#감각의언어 #스펙을느낌으로 #온', track: 'Track3', btlType: ['컨설팅'] },
+  31: { name: '완벽하게 통역되자, 아무것도 통하지 않았습니다', keywords: '#AI통역 #기술의역설', track: 'Track3', btlType: ['경험공간'] },
+  32: { name: '"나도 저래" - 네 글자로 끝나는 공감', keywords: '#나도저래 #평범의보편 #러브미', track: 'Track2', btlType: ['컨설팅'] },
+  33: { name: '물인데, 맥주캔', keywords: '#리퀴드데스 #정체성디자인 #포장의힘', track: 'Track3', btlType: ['판매공간','팝업'] },
+  34: { name: '선생님이 아니라, 초록 올빼미', keywords: '#두올링고 #응원의교육', track: 'Track2', btlType: ['경험공간'] },
+  35: { name: '새로운 게 아니라, 이미 하던 거', keywords: '#관찰의힘 #크래프트하인즈 #소비자가만든다', track: 'Track3', btlType: ['컨설팅'] },
+  36: { name: '잠만 자도 사게 됩니다 (MUJI Hotel)', keywords: '#무지호텔 #체험형쇼룸 #살아보는경험', track: 'Track3', btlType: ['경험공간','팝업'] },
+  37: { name: '쓰레기가 20만원입니다 (FREITAG)', keywords: '#업사이클링 #유일무이 #프라이탁', track: 'Track1', btlType: ['경험공간','판매공간'] },
+  38: { name: '사지 마세요, 가 가장 잘 팔렸습니다 (Patagonia)', keywords: '#역설의브랜딩 #진정성 #파타고니아', track: 'Track1', btlType: ['판매공간','컨설팅'] },
+  39: { name: '화면 밖으로 나왔습니다 (Netflix House)', keywords: '#넷플릭스하우스 #LBE #콘텐츠가공간이되는순간', track: 'Track3', btlType: ['경험공간','비상설전시'] },
+  40: { name: '빈 종이 한 장이 13조 원입니다 (Notion)', keywords: '#노션 #락인전략 #빈캔버스', track: 'Track3', btlType: ['컨설팅'] },
+  41: { name: '10시간 29분 통화, 신발 한 켤레 (Zappos)', keywords: '#비효율의감동 #자포스 #매뉴얼없는콜센터', track: 'Track2', btlType: ['판매공간','컨설팅'] },
+  42: { name: '카페가 있는 옷가게가 아닙니다 (ARKET)', keywords: '#노르딕라이프스타일 #SPA의진화 #아르켓', track: 'Track3', btlType: ['경험공간','판매공간'] },
+  43: { name: '비싼 가격이 콘텐츠입니다 (Erewhon)', keywords: '#가격이콘텐츠 #셀럽스무디 #에레원', track: 'Track3', btlType: ['판매공간','팝업'] },
+  44: { name: '좌석을 없앴더니 3만 개가 됐습니다 (Luckin Coffee)', keywords: '#경험을뺀전략 #루이싱커피 #앱퍼스트', track: 'Track3', btlType: ['판매공간'] },
+  45: { name: '백화점이 화성으로 갔습니다 (SKP-S)', keywords: '#세계관리테일 #젠틀몬스터 #비상업공간', track: 'Track3', btlType: ['경험공간','비상설전시'] },
+  46: { name: '뭐가 들었는지 모릅니다. 그래서 삽니다 (POP MART)', keywords: '#블라인드박스 #팝마트 #불확실성이상품', track: 'Track3', btlType: ['판매공간','팝업'] },
+  47: { name: '메뉴판이 없습니다 (% Arabica)', keywords: '#미니멀카페 #여백의디자인 #퍼센트아라비카', track: 'Track3', btlType: ['경험공간'] },
+  48: { name: '차 의식을 없앤 찻집 (Tea\'stone)', keywords: '#전통차MZ #티스톤 #역발상', track: 'Track3', btlType: ['경험공간','판매공간'] },
+  49: { name: 'IT 표준화로 3㎡에서도 품질 일관성 (Fisheye)', keywords: '#시스템화 #피쉬아이 #데이터표준화', track: 'Track3', btlType: ['판매공간','컨설팅'] },
+  50: { name: '이벤트 시스템 (Moncler Genius)', keywords: '#몽클레르 #이벤트시스템 #반복구조', track: 'Track3', btlType: ['이벤트','팝업'] }
 };
 
 // ===== MATCHING RULES =====
@@ -447,30 +447,30 @@ function renderResults(d) {
 
   // M3
   const m3ExcludeNote = d.excluded.m3.length > 0 ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">(${d.clientName} 이전 사용 제외: #${d.excluded.m3.join(', #')})</div>` : '';
-  const insightCards = d.allInsightNums.map((num, i) => {
-    const ins = INSIGHTS_DATA[num];
-    if (!ins) return '';
-    const isPrimary = i < 3;
-    return `
-      <div class="insight-card">
-        <div class="insight-num">#${String(num).padStart(2,'0')}</div>
-        <div class="insight-content">
-          <div class="insight-name">${ins.name}</div>
-          <div class="insight-tags">
-            ${ins.keywords.split(' ').map(k => `<span class="insight-tag">${k}</span>`).join('')}
-            <span class="insight-tag">${ins.track}</span>
-            <span class="insight-tag ${isPrimary ? 'badge-match' : ''}">${isPrimary ? '주관점' : '보조'}</span>
-          </div>
-        </div>
+
+  // Store M3 data for BTL filtering
+  window._m3Data = { allInsightNums: d.allInsightNums };
+  window._m3ExcludeNote = m3ExcludeNote;
+
+  const BTL_TYPES = ['경험공간', '판매공간', '비상설전시', '이벤트', '팝업', '컨설팅'];
+  const btlFilterHTML = `
+    <div class="btl-filter">
+      <span class="btl-filter-label">BTL 유형</span>
+      <div class="btl-filter-tags" id="m3-btl-tags">
+        ${BTL_TYPES.map(t => `<span class="btl-tag" data-btl="${t}">${t}</span>`).join('')}
       </div>
-    `;
-  }).join('');
+    </div>
+  `;
 
   document.getElementById('resM3').innerHTML = `
     <div class="result-label">M3 — 추천 인사이트 (09~15P)</div>
     ${m3ExcludeNote}
-    <div class="insight-grid">${insightCards}</div>
+    ${btlFilterHTML}
+    <div class="insight-grid" id="m3-insight-grid"></div>
   `;
+
+  renderM3Insights();
+  initM3BtlFilter();
 
   // M4
   document.getElementById('resM4').innerHTML = `
@@ -517,8 +517,68 @@ function renderModuleCard(mod, badge, badgeClass) {
   `;
 }
 
+// ===== M3 BTL FILTER =====
+const _m3ActiveBtl = new Set();
+
+function renderM3Insights() {
+  const data = window._m3Data;
+  if (!data) return;
+  const grid = document.getElementById('m3-insight-grid');
+  if (!grid) return;
+
+  const filtered = data.allInsightNums.filter(num => {
+    if (_m3ActiveBtl.size === 0) return true;
+    const ins = INSIGHTS_DATA[num];
+    return ins && ins.btlType && ins.btlType.some(t => _m3ActiveBtl.has(t));
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="btl-empty">선택한 BTL 유형에 해당하는 인사이트가 없습니다</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((num, i) => {
+    const ins = INSIGHTS_DATA[num];
+    if (!ins) return '';
+    const origIdx = data.allInsightNums.indexOf(num);
+    const isPrimary = origIdx < 3;
+    const btlBadges = (ins.btlType || []).map(t => `<span class="insight-tag">${t}</span>`).join('');
+    return `
+      <div class="insight-card">
+        <div class="insight-num">#${String(num).padStart(2,'0')}</div>
+        <div class="insight-content">
+          <div class="insight-name">${ins.name}</div>
+          <div class="insight-tags">
+            ${ins.keywords.split(' ').map(k => `<span class="insight-tag">${k}</span>`).join('')}
+            <span class="insight-tag">${ins.track}</span>
+            ${btlBadges}
+            <span class="insight-tag ${isPrimary ? 'badge-match' : ''}">${isPrimary ? '주관점' : '보조'}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function initM3BtlFilter() {
+  const container = document.getElementById('m3-btl-tags');
+  if (!container) return;
+  container.querySelectorAll('.btl-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      const val = tag.dataset.btl;
+      if (_m3ActiveBtl.has(val)) _m3ActiveBtl.delete(val);
+      else _m3ActiveBtl.add(val);
+      tag.classList.toggle('active', _m3ActiveBtl.has(val));
+      renderM3Insights();
+    });
+  });
+}
+
 // ===== ACTIONS =====
-runBtn.addEventListener('click', runMatch);
+runBtn.addEventListener('click', () => {
+  _m3ActiveBtl.clear();
+  runMatch();
+});
 
 resetBtn.addEventListener('click', () => {
   document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
